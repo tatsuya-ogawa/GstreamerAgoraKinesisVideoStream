@@ -20,6 +20,7 @@ RUN apt-get update && \
     meson \
     libopus-dev \
     cmake \
+    m4 \
     git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
