@@ -1,9 +1,28 @@
-FROM --platform=linux/amd64 ubuntu:latest
+FROM --platform=linux/amd64 ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update
-RUN apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools
-RUN apt-get install -y libssl-dev libcurl4-openssl-dev liblog4cplus-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base-apps gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-tools
-RUN apt-get install -y libx264-dev sudo meson libopus-dev cmake git
+RUN apt-get update && \
+    apt-get install -y \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    libgstreamer-plugins-bad1.0-dev \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-libav \
+    gstreamer1.0-tools \
+    gstreamer1.0-plugins-base-apps \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    liblog4cplus-dev \
+    libx264-dev \
+    sudo \
+    meson \
+    libopus-dev \
+    cmake \
+    git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 RUN git clone --branch feature/vp8_yuv https://github.com/tatsuya-ogawa/agora-gstreamer /opt/agora-gstreamer
 RUN cd /opt/agora-gstreamer && ./build_all_3.8.sh
 RUN git clone https://github.com/awslabs/amazon-kinesis-video-streams-producer-sdk-cpp.git /opt/amazon-kinesis-video-streams-producer-sdk-cpp
